@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowUp, ChevronDown, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   InputGroup,
@@ -17,12 +18,29 @@ import {
   getRandomPromptTemplate,
   promptTemplateCategories,
 } from "@/components/home/prompt-templates";
+import { useCreateProject } from "@/features/projects/hooks/projects";
 
 export function PromptInput() {
   const [prompt, setPrompt] = useState("");
-  const isPending = false;
+  const router = useRouter();
+  const { mutate: createProject, isPending } = useCreateProject();
 
-  function handleSubmit() {}
+  function handleSubmit() {
+    const value = prompt.trim();
+
+    if (!value || isPending) {
+      return;
+    }
+
+    createProject(value, {
+      onSuccess: (project) => {
+        router.push(`/projects/${project.id}`);
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    });
+  }
 
   function applySuggestion(nextPrompt: string) {
     setPrompt(nextPrompt);
@@ -40,7 +58,7 @@ export function PromptInput() {
           onChange={(event) => setPrompt(event.target.value)}
           placeholder="Ask r0 to build..."
           rows={4}
-          // disabled={isPending}
+          disabled={isPending}
           className="min-h-24 px-4 pt-4 text-sm"
           onKeyDown={(event) => {
             if (event.key === "Enter" && !event.shiftKey) {

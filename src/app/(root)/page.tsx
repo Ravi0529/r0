@@ -1,6 +1,8 @@
 import { GlassNavbar } from "@/components/home/glass-navbar";
 import { HomeBackground } from "@/components/home/home-background";
+// import { ProjectGrid } from "@/components/home/project-grid";
 import { PromptInput } from "@/components/home/prompt-input";
+import { ProjectGrid } from "@/features/projects/components/project-grid";
 
 export default function Home() {
   return (
@@ -16,7 +18,7 @@ export default function Home() {
         </div>
 
         <div className="mt-16 w-full max-w-5xl">
-          {/* <ProjectGrid /> */}
+          <ProjectGrid />
         </div>
       </main>
     </div>
