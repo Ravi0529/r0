@@ -1,5 +1,6 @@
 "use server";
 import { getCurrentUser } from "@/features/auth/actions";
+import { inngest } from "@/features/inngest/client";
 import { MessageRole, MessageType } from "@/generated/prisma/client";
 import { generateSlug } from "random-word-slugs";
 import { prisma } from "@/lib/db";
@@ -28,7 +29,13 @@ export const createProject = async (value: string) => {
       },
     });
 
-    // TODO: Send the project to the inngest
+    await inngest.send({
+      name: "code-agent/run",
+      data: {
+        value,
+        projectId: project.id,
+      },
+    });
 
     return project;
   } catch (error) {
@@ -77,7 +84,7 @@ export const getProjectById = async (id: string) => {
   }
 
   try {
-    const project = await prisma.project.findFirst({
+    const project = await prisma.project.findUnique({
       where: {
         id,
         userId: user.id,
