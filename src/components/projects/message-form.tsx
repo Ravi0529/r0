@@ -4,6 +4,7 @@ import { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { ArrowUpIcon } from "lucide-react";
 import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { useCreateMessage } from "@/features/messages/hooks/messages";
@@ -51,8 +52,9 @@ export default function MessageForm({
         void onSubmit();
       }}
       className={cn(
-        "relative rounded-xl border bg-sidebar p-4 pt-1 transition-all dark:bg-sidebar",
-        isFocused && "shadow-lg ring-2 ring-primary/20",
+        "relative rounded-3xl border border-border/60 bg-card/85 p-4 pt-1 shadow-sm backdrop-blur-sm transition-all duration-300 dark:bg-sidebar/85",
+        isFocused &&
+          "border-primary/30 shadow-xl shadow-primary/10 ring-2 ring-primary/15",
       )}
     >
       <TextareaAutosize
@@ -65,7 +67,7 @@ export default function MessageForm({
         minRows={3}
         maxRows={8}
         className={cn(
-          "w-full resize-none border-none bg-transparent pt-4 outline-none",
+          "w-full resize-none border-none bg-transparent pt-4 text-sm leading-6 outline-none placeholder:text-muted-foreground/70",
           isPending && "opacity-50",
         )}
         onKeyDown={(event) => {
@@ -77,21 +79,27 @@ export default function MessageForm({
       />
 
       <div className="flex items-end justify-between gap-x-2 pt-2">
-        <div className="font-mono text-[10px] text-muted-foreground">
-          <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+        <div className="flex items-center gap-2 font-mono text-[10px] text-muted-foreground">
+          <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded-md border border-border/60 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground shadow-sm">
             <span>&#8984;</span>Enter
           </kbd>
-          <span> to submit</span>
+          <span>to submit</span>
         </div>
+        <Badge
+          variant="outline"
+          className="hidden border-border/60 bg-background/80 text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:inline-flex"
+        >
+          Ctrl / Cmd
+        </Badge>
         <Button
           className={cn(
-            "size-8 rounded-full",
+            "size-9 rounded-full shadow-sm transition-all duration-300 hover:-translate-y-0.5",
             isPending && "border bg-muted-foreground",
           )}
           disabled={isPending || !content.trim()}
           type="submit"
         >
-          {isPending ? <Spinner /> : <ArrowUpIcon className="size-4" />}
+          {isPending ? <Spinner className="size-4" /> : <ArrowUpIcon className="size-4" />}
         </Button>
       </div>
     </form>

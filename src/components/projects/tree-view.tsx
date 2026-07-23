@@ -50,10 +50,10 @@ export function TreeView({
 }>) {
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="flex h-9 shrink-0 items-center border-b px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+      <div className="flex h-10 shrink-0 items-center border-b border-border/60 px-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
         Files
       </div>
-      <div className="min-h-0 flex-1 overflow-auto py-1">
+      <div className="min-h-0 flex-1 overflow-auto py-2">
         {data.map((item) => (
           <TreeNode
             key={getItemName(item)}
@@ -102,15 +102,21 @@ function TreeNode({
         onClick={() => onSelect?.(currentPath)}
         style={{ paddingLeft: indent + 18 }}
         className={cn(
-          "flex w-full items-center gap-2 py-1 pr-2 text-sm transition-colors",
-          "hover:bg-accent/60",
+          "flex w-full items-center gap-2 rounded-r-2xl py-1.5 pr-3 text-sm transition-all duration-300 hover:-translate-y-px hover:bg-accent/70",
           isSelected
-            ? "bg-accent font-medium text-accent-foreground"
+            ? "bg-primary/10 font-medium text-foreground shadow-[inset_0_0_0_1px_color-mix(in_oklch,var(--primary)_20%,transparent)]"
             : "text-foreground/80",
         )}
         title={name}
       >
-        {getFileIcon(String(name))}
+        <span
+          className={cn(
+            "transition-transform duration-300",
+            isSelected && "text-primary",
+          )}
+        >
+          {getFileIcon(String(name))}
+        </span>
         <span className="truncate">{name}</span>
       </button>
     );
@@ -122,25 +128,25 @@ function TreeNode({
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         style={{ paddingLeft: indent }}
-        className="flex w-full items-center gap-1.5 py-1 pr-2 text-sm text-foreground/90 transition-colors hover:bg-accent/60"
+        className="flex w-full items-center gap-1.5 rounded-r-2xl py-1.5 pr-3 text-sm text-foreground/90 transition-all duration-300 hover:-translate-y-px hover:bg-accent/70"
         title={name}
       >
         <ChevronRightIcon
           className={cn(
-            "size-4 shrink-0 text-muted-foreground transition-transform",
+            "size-4 shrink-0 text-muted-foreground transition-transform duration-300",
             open && "rotate-90",
           )}
         />
         {open ? (
-          <FolderOpenIcon className="size-4 shrink-0 text-sky-500" />
+          <FolderOpenIcon className="size-4 shrink-0 text-primary" />
         ) : (
-          <FolderIcon className="size-4 shrink-0 text-sky-500" />
+          <FolderIcon className="size-4 shrink-0 text-primary" />
         )}
         <span className="truncate font-medium">{name}</span>
       </button>
 
       {open && (
-        <div>
+        <div className="animate-in slide-in-from-top-1 duration-200">
           {children.map((child) => (
             <TreeNode
               key={`${nodeKey}/${getItemName(child)}`}

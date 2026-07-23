@@ -129,10 +129,13 @@ export function FileExplorer({
   }, [selectedFile, files]);
 
   return (
-    <ResizablePanelGroup orientation="horizontal" className="h-full min-h-0">
+    <ResizablePanelGroup
+      orientation="horizontal"
+      className="h-full min-h-0 overflow-hidden rounded-none"
+    >
       <ResizablePanel
         defaultSize={22}
-        className="min-w-55 bg-sidebar"
+        className="min-w-55 border-r border-border/60 bg-sidebar/60 backdrop-blur-sm"
       >
         <TreeView
           data={treeData}
@@ -142,16 +145,20 @@ export function FileExplorer({
       </ResizablePanel>
       <ResizableHandle className="w-px bg-border transition-colors hover:bg-primary/40" />
 
-      <ResizablePanel defaultSize={78} minSize={55} className="min-w-0">
+      <ResizablePanel
+        defaultSize={78}
+        minSize={55}
+        className="min-w-0 bg-background/60 backdrop-blur-sm"
+      >
         {selectedFile && files[selectedFile] ? (
           <div className="flex h-full min-h-0 w-full flex-col">
-            <div className="flex shrink-0 items-center justify-between gap-x-2 border-b bg-sidebar/50 px-4 py-2">
+            <div className="sticky top-0 z-10 flex shrink-0 items-center justify-between gap-x-2 border-b border-border/60 bg-background/80 px-4 py-2 backdrop-blur-sm">
               <FileBreadcrumb filePath={selectedFile} />
               <Hint text="Copy to clipboard" side="bottom">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 hover:bg-background/80"
+                  className="h-8 w-8 rounded-full border border-border/60 bg-background/70 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-background/90"
                   onClick={handleCopy}
                 >
                   {copied ? (

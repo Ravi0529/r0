@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export function HomeBackground({ className }: { className?: string }) {
+export function HomeBackground({ className }: Readonly<{ className?: string }>) {
   return (
     <div
       aria-hidden
@@ -9,10 +9,16 @@ export function HomeBackground({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className="absolute inset-0 bg-background" />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, color-mix(in oklch, var(--primary) 8%, var(--background)) 0%, var(--background) 36%, var(--background) 100%)",
+        }}
+      />
 
       <div
-        className="absolute inset-0 opacity-40 dark:opacity-100"
+        className="absolute inset-0 opacity-35 dark:opacity-100"
         style={{
           backgroundImage: `
             linear-gradient(to right, color-mix(in oklch, var(--border) 70%, transparent) 1px, transparent 1px),
@@ -24,15 +30,16 @@ export function HomeBackground({ className }: { className?: string }) {
         }}
       />
 
-      <div className="absolute -top-32 left-1/2 size-130 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl dark:bg-primary/25" />
-      <div className="absolute top-1/3 -left-24 size-80 rounded-full bg-primary/10 blur-3xl dark:bg-primary/20" />
-      <div className="absolute bottom-0 right-0 size-96 translate-x-1/4 translate-y-1/4 rounded-full bg-primary/10 blur-3xl dark:bg-primary/15" />
+      <div className="absolute -top-32 left-1/2 size-130 -translate-x-1/2 rounded-full bg-primary/12 blur-3xl dark:bg-primary/25" />
+      <div className="absolute top-1/3 -left-24 size-80 rounded-full bg-amber-200/30 blur-3xl dark:bg-primary/20" />
+      <div className="absolute bottom-0 right-0 size-96 translate-x-1/4 translate-y-1/4 rounded-full bg-orange-200/25 blur-3xl dark:bg-primary/15" />
+      <div className="absolute top-16 right-1/4 size-40 rounded-full bg-foreground/5 blur-3xl dark:bg-foreground/5" />
 
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 90% 60% at 50% 0%, color-mix(in oklch, var(--primary) 12%, transparent), transparent 70%)",
+            "radial-gradient(ellipse 90% 60% at 50% 0%, color-mix(in oklch, var(--primary) 14%, transparent), transparent 70%)",
         }}
       />
 

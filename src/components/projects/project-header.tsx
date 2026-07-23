@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ChevronDownIcon, ChevronLeftIcon, SunMoonIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { R0Mark } from "@/components/brand/r0-logo";
+import { BrandLogo } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -34,18 +34,17 @@ export default function ProjectHeader({
   const { setTheme, theme } = useTheme();
 
   return (
-    <header className="flex items-center justify-between border-b p-2">
+    <header className="flex items-center justify-between border-b border-border/60 bg-background/70 px-3 py-2 backdrop-blur-sm">
       <DropdownMenu>
         <DropdownMenuTrigger
-          render={(props) => (
+          render={
             <Button
-              {...props}
-              variant="ghost"
               size="sm"
-              className="pl-2 transition-opacity hover:bg-transparent hover:opacity-75 focus-visible:ring-0"
+              variant="ghost"
+              className="min-w-0 justify-start gap-3 rounded-full px-3 transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent/60 focus-visible:ring-0"
             >
-              <R0Mark className="h-7 w-auto shrink-0" />
-              <span className="text-sm font-medium capitalize">
+              <BrandLogo className="h-7 w-auto shrink-0" />
+              <span className="min-w-0 truncate text-sm font-semibold capitalize tracking-tight">
                 {isPending ? (
                   <Spinner />
                 ) : (
@@ -54,37 +53,44 @@ export default function ProjectHeader({
               </span>
               <ChevronDownIcon className="ml-2 size-4" />
             </Button>
-          )}
+          }
         />
 
-        <DropdownMenuContent side="bottom" align="start">
+        <DropdownMenuContent
+          side="bottom"
+          align="start"
+          className="w-72 rounded-3xl border border-border/60 bg-popover/95 p-2 shadow-xl backdrop-blur-xl"
+        >
           <DropdownMenuItem
-            render={(props) => (
-              <Link href="/" {...props}>
+            render={
+              <Link
+                href="/"
+                className="flex items-center gap-2.5 rounded-2xl px-3 py-2"
+              >
                 <ChevronLeftIcon className="size-4" />
                 <span>Go to Dashboard</span>
               </Link>
-            )}
-          >
-            <ChevronLeftIcon className="size-4" />
-            <span>Go to Dashboard</span>
-          </DropdownMenuItem>
+            }
+          />
           <DropdownMenuSeparator />
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="gap-2">
+            <DropdownMenuSubTrigger className="gap-2 rounded-2xl">
               <SunMoonIcon className="size-4 text-muted-foreground" />
               <span>Appearance</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent sideOffset={5}>
+              <DropdownMenuSubContent
+                sideOffset={5}
+                className="rounded-3xl border border-border/60 bg-popover/95 p-2 shadow-xl backdrop-blur-xl"
+              >
                 <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
-                  <DropdownMenuRadioItem value="light">
+                  <DropdownMenuRadioItem className="rounded-2xl" value="light">
                     Light
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="dark">
+                  <DropdownMenuRadioItem className="rounded-2xl" value="dark">
                     Dark
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="system">
+                  <DropdownMenuRadioItem className="rounded-2xl" value="system">
                     System
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>

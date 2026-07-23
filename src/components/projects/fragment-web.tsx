@@ -27,11 +27,16 @@ export default function FragmentWeb({
   }
 
   return (
-    <div className="flex h-full w-full flex-col">
-      <div className="flex items-center gap-x-2 border-b bg-sidebar p-2">
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-none">
+      <div className="flex items-center gap-x-2 border-b border-border/60 bg-sidebar/70 p-2 backdrop-blur-sm">
         <Hint text="Refresh" side="bottom" align="start">
-          <Button size="sm" variant="outline" onClick={onRefresh}>
-            <RefreshCcw />
+          <Button
+            size="icon-sm"
+            variant="outline"
+            onClick={onRefresh}
+            className="rounded-full border-border/60 bg-background/80 shadow-sm transition-all duration-300 hover:-translate-y-0.5"
+          >
+            <RefreshCcw className="size-4" />
           </Button>
         </Hint>
         <Hint
@@ -44,7 +49,7 @@ export default function FragmentWeb({
             variant="outline"
             onClick={onCopy}
             disabled={!data.sandboxUrl || copied}
-            className="flex-1 justify-start text-start font-normal"
+            className="flex-1 justify-start rounded-full border-border/60 bg-background/80 text-start font-normal shadow-sm transition-all duration-300 hover:-translate-y-0.5"
           >
             <span className="truncate">{data.sandboxUrl}</span>
           </Button>
@@ -52,20 +57,21 @@ export default function FragmentWeb({
 
         <Hint text="Open in new tab" side="bottom" align="start">
           <Button
-            size="sm"
+            size="icon-sm"
             variant="outline"
             onClick={() => {
               if (!data.sandboxUrl) return;
               window.open(data.sandboxUrl, "_blank");
             }}
+            className="rounded-full border-border/60 bg-background/80 shadow-sm transition-all duration-300 hover:-translate-y-0.5"
           >
-            <ExternalLink />
+            <ExternalLink className="size-4" />
           </Button>
         </Hint>
       </div>
       <iframe
         key={fragmentKey}
-        className="h-full w-full"
+        className="h-full w-full bg-background"
         sandbox="allow-scripts allow-same-origin"
         loading="lazy"
         src={data.sandboxUrl}

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowUp, ChevronDown, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   InputGroup,
@@ -52,14 +53,14 @@ export function PromptInput() {
 
   return (
     <div className="flex w-full flex-col gap-6">
-      <InputGroup className="h-auto min-h-32 flex-col rounded-2xl border-border/60 bg-card/50 shadow-sm backdrop-blur-sm has-[>textarea]:h-auto">
+      <InputGroup className="group h-auto min-h-32 flex-col rounded-3xl border-border/60 bg-card/70 shadow-[0_20px_45px_-24px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_50px_-24px_rgba(0,0,0,0.3)] has-[>textarea]:h-auto">
         <InputGroupTextarea
           value={prompt}
           onChange={(event) => setPrompt(event.target.value)}
           placeholder="Ask r0 to build..."
           rows={4}
           disabled={isPending}
-          className="min-h-24 px-4 pt-4 text-sm"
+          className="min-h-24 px-4 pt-4 text-sm leading-6 placeholder:text-muted-foreground/65"
           onKeyDown={(event) => {
             if (event.key === "Enter" && !event.shiftKey) {
               event.preventDefault();
@@ -69,21 +70,34 @@ export function PromptInput() {
         />
         <InputGroupAddon
           align="block-end"
-          className="w-full justify-between border-t border-border/50 px-3 py-2"
+          className="w-full justify-between border-t border-border/50 bg-background/40 px-3 py-2"
         >
-          <Button variant="outline" size="sm" className="rounded-full">
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-full border-border/60 bg-background/80 shadow-sm transition-transform duration-300 hover:-translate-y-0.5"
+          >
             <InputGroupText>r0 Max</InputGroupText>
             <ChevronDown className="size-3 opacity-60" />
           </Button>
-          <InputGroupButton
-            size="icon-sm"
-            variant="default"
-            onClick={handleSubmit}
-            disabled={!prompt.trim() || isPending}
-            aria-label="Submit prompt"
-          >
-            {isPending ? <Spinner className="size-4" /> : <ArrowUp />}
-          </InputGroupButton>
+          <div className="flex items-center gap-2">
+            <Badge
+              variant="outline"
+              className="hidden border-border/60 bg-background/80 text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:inline-flex"
+            >
+              Shift + Enter
+            </Badge>
+            <InputGroupButton
+              size="icon-sm"
+              variant="default"
+              onClick={handleSubmit}
+              disabled={!prompt.trim() || isPending}
+              aria-label="Submit prompt"
+              className="transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              {isPending ? <Spinner className="size-4" /> : <ArrowUp />}
+            </InputGroupButton>
+          </div>
         </InputGroupAddon>
       </InputGroup>
 
